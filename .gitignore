@@ -1,0 +1,9 @@
+/vendor
+/node_modules
+/public/build
+.env
+/storage
+.phpunit.result.cache
+.php-cs-fixer.cache
+.idea
+.DS_Store
