@@ -1,5 +1,7 @@
 import React from 'react';
 import { useForm } from '@inertiajs/react';
+import PrimaryButton from './PrimaryButton';
+import { FormField, SelectInput, TextInput, TextareaInput } from './FormControls';
 
 export default function BookingForm({ rooms }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -21,76 +23,63 @@ export default function BookingForm({ rooms }) {
       }}
       className="mt-4 space-y-4"
     >
-      <label className="block text-sm">
-        <span className="text-slate-600">Room</span>
-        <select
+      <FormField label="Room" htmlFor="booking-room" error={errors.room_id}>
+        <SelectInput
+          id="booking-room"
           value={data.room_id}
           onChange={(e) => setData('room_id', e.target.value)}
-          className="mt-1 w-full rounded-md border-slate-300 text-sm"
         >
           {rooms.map((room) => (
             <option key={room.id} value={room.id}>
               {room.name}
             </option>
           ))}
-        </select>
-        {errors.room_id && <p className="mt-1 text-xs text-rose-600">{errors.room_id}</p>}
-      </label>
-      <label className="block text-sm">
-        <span className="text-slate-600">Start time</span>
-        <input
+        </SelectInput>
+      </FormField>
+      <FormField label="Start time" htmlFor="booking-start" error={errors.starts_at}>
+        <TextInput
+          id="booking-start"
           type="datetime-local"
           value={data.starts_at}
           onChange={(e) => setData('starts_at', e.target.value)}
-          className="mt-1 w-full rounded-md border-slate-300 text-sm"
         />
-        {errors.starts_at && <p className="mt-1 text-xs text-rose-600">{errors.starts_at}</p>}
-      </label>
-      <label className="block text-sm">
-        <span className="text-slate-600">End time</span>
-        <input
+      </FormField>
+      <FormField label="End time" htmlFor="booking-end" error={errors.ends_at}>
+        <TextInput
+          id="booking-end"
           type="datetime-local"
           value={data.ends_at}
           onChange={(e) => setData('ends_at', e.target.value)}
-          className="mt-1 w-full rounded-md border-slate-300 text-sm"
         />
-        {errors.ends_at && <p className="mt-1 text-xs text-rose-600">{errors.ends_at}</p>}
-      </label>
-      <label className="block text-sm">
-        <span className="text-slate-600">Attendees</span>
-        <input
+      </FormField>
+      <FormField label="Attendees" htmlFor="booking-attendees" error={errors.attendee_count}>
+        <TextInput
+          id="booking-attendees"
           type="number"
           min="1"
           value={data.attendee_count}
           onChange={(e) => setData('attendee_count', e.target.value)}
-          className="mt-1 w-full rounded-md border-slate-300 text-sm"
         />
-        {errors.attendee_count && <p className="mt-1 text-xs text-rose-600">{errors.attendee_count}</p>}
-      </label>
-      <label className="block text-sm">
-        <span className="text-slate-600">Title</span>
-        <input
+      </FormField>
+      <FormField label="Title" htmlFor="booking-title">
+        <TextInput
+          id="booking-title"
           type="text"
           value={data.title}
           onChange={(e) => setData('title', e.target.value)}
-          className="mt-1 w-full rounded-md border-slate-300 text-sm"
         />
-      </label>
-      <label className="block text-sm">
-        <span className="text-slate-600">Notes</span>
-        <textarea
+      </FormField>
+      <FormField label="Notes" htmlFor="booking-notes">
+        <TextareaInput
+          id="booking-notes"
           value={data.notes}
           onChange={(e) => setData('notes', e.target.value)}
-          className="mt-1 w-full rounded-md border-slate-300 text-sm"
+          rows={4}
         />
-      </label>
-      <button
-        type="submit"
-        disabled={processing}
-        className="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50"
-      >
+      </FormField>
+      <PrimaryButton type="submit" disabled={processing}>
         {processing ? 'Booking…' : 'Book room'}
-      </button>
+      </PrimaryButton>
     </form>
   );
 }
